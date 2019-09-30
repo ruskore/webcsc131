@@ -42,6 +42,12 @@ img {
   transform: translate(-50%, -50%);
 }
 
+.ry-banner-text {
+  font-size: 65px;
+  color: #fff;
+  font-weight: 800;
+}
+
 .ry-grid {
   display: flex;
 }

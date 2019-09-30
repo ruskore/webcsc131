@@ -4,6 +4,11 @@
     <link rel="stylesheet" href="styles.css">
     <title>Russ Yatsenko's web project for CSC 131 class</title>
     <script src="ryscript.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.12.0/bootstrap-social.min.css">
   </head>
   <body>
     <div class="ry-container">
@@ -30,8 +35,22 @@
       </div>
     </div>
 
-    <p id="demo">A Paragraph</p>
-    <button type="button" onclick="myFunction()">Try it</button>
+    <a id="linkedin-button" class="btn btn-block btn-social btn-linkedin">
+      <i class="fa fa-linkedin"></i> Sign in with Linkedin
+    </a>
+
+    <script>
+      $('#linkedin-button').on('click', function() {
+        OAuth.initialize('wp9GLyk59FRnrkI6Cbz0zIT4P94')
+        OAuth.popup('linkedin2').done(function(result) {
+            console.log(result)
+        })
+
+        result.me().done(function(data) {
+        // do something with `data`, e.g. print data.name
+        })
+      })
+    </script>
 
   </body>
   <footer>

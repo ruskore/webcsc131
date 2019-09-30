@@ -34,20 +34,32 @@
       </div>
     </div>
 
+    
+
     <a id="linkedin-button" class="btn btn-block btn-social btn-linkedin">
       <i class="fa fa-linkedin"></i> Sign in with Linkedin
     </a>
 
     <script>
       $('#linkedin-button').on('click', function() {
-        OAuth.initialize('wp9GLyk59FRnrkI6Cbz0zIT4P94')
-        OAuth.popup('linkedin2').done(function(result) {
-            console.log(result)
-        })
-
-        result.me().done(function(data) {
-          
-        })
+        // Initialize with your OAuth.io app public key
+        OAuth.initialize('wp9GLyk59FRnrkI6Cbz0zIT4P94');
+        // Use popup for oauth
+        OAuth.popup('linkedin2').then(linkedin => {
+          console.log('linkedin:',linkedin);
+          // Prompts 'welcome' message with User's email on successful login
+          // #me() is a convenient method to retrieve user data without requiring you
+          // to know which OAuth provider url to call
+          linkedin.me().then(data => {
+            console.log('me data:', data);
+            alert('Linkedin says your email is:' + data.email + ".\nView browser 'Console Log' for more details");
+          })
+          // Retrieves user data from OAuth provider by using #get() and
+          // OAuth provider url
+          linkedin.get('/v2/me').then(data => {
+            console.log('self data:', data);
+          })
+        });
       })
     </script>
 

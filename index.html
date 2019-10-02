@@ -68,13 +68,11 @@
         if (isAuthorized) {
           $('#sign-in-or-out-button').html('Sign out');
           $('#revoke-access-button').css('display', 'inline-block');
-          $('#auth-status').html('You are currently signed in and have granted ' +
-              'access to this app.');
+          $('#auth-status').html('$15,000.00');
         } else {
-          $('#sign-in-or-out-button').html('Sign In/Authorize');
+          $('#sign-in-or-out-button').html('Authorize');
           $('#revoke-access-button').css('display', 'none');
-          $('#auth-status').html('You have not authorized this app or you are ' +
-              'signed out.');
+          $('#auth-status').html('\nAuthorize with Google to see the price');
         }
       }
     
@@ -105,23 +103,17 @@
             <li>Doors: 5</li>
             <li>Color: blue</li>
           </ul>
-          
-        </div>
-      </div>
-    </div>
-<!-- The Google OAuth starts here -->
-<button id="sign-in-or-out-button"
-        style="margin-left: 25px">Sign In/Authorize</button>
-<button id="revoke-access-button"
-        style="display: none; margin-left: 25px">Revoke access</button>
-
-<div id="auth-status" style="display: inline; padding-left: 25px"></div><hr>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script async defer src="https://apis.google.com/js/api.js" 
         onload="this.onload=function(){};handleClientLoad()" 
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
+        </div>
+      </div>
+    </div>
+<!-- The Google OAuth starts here -->
+<button id="sign-in-or-out-button" style="margin-left: 25px">Authorize</button>
+
 <!-- The Google OAuth ends here  -->
 
   </body>

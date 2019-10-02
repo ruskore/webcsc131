@@ -69,6 +69,16 @@ ul {
   list-style-type: none;
  }
 
+ #sign-in-or-out-button {
+   padding: 10px;
+   font-size: 16px;
+   border: 1px solid green;
+   border-radius: 4px;
+   background-color: green;
+   color: white;
+   cursor: pointer;
+ }
+
  @media (max-width: 786px) {
   .ry-grid {
     display: block;

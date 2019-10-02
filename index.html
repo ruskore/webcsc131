@@ -4,10 +4,86 @@
     <link rel="stylesheet" href="styles.css">
     <title>Russ Yatsenko's web project for CSC 131 class</title>
     <script src="ryscript.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.12.0/bootstrap-social.min.css">
+    
+    <script>
+      var GoogleAuth;
+      var SCOPE = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+      function handleClientLoad() {
+        // Load the API's client and auth2 modules.
+        // Call the initClient function after the modules load.
+        gapi.load('client:auth2', initClient);
+      }
+    
+      function initClient() {
+        // Retrieve the discovery document for version 3 of Google Drive API.
+        // In practice, your app can retrieve one or more discovery documents.
+        var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+    
+        // Initialize the gapi.client object, which app uses to make API requests.
+        // Get API key and client ID from API Console.
+        // 'scope' field specifies space-delimited list of access scopes.
+        gapi.client.init({
+            'apiKey': 'AIzaSyAsrxRS0h5Rzh7mUBZkF6JY1lMCbeuwD8o',
+            'discoveryDocs': [discoveryUrl],
+            'clientId': '82852357315-797ea3r5oervp1o34jlng08b19vm6v54.apps.googleusercontent.com',
+            'scope': SCOPE
+        }).then(function () {
+          GoogleAuth = gapi.auth2.getAuthInstance();
+    
+          // Listen for sign-in state changes.
+          GoogleAuth.isSignedIn.listen(updateSigninStatus);
+    
+          // Handle initial sign-in state. (Determine if user is already signed in.)
+          var user = GoogleAuth.currentUser.get();
+          setSigninStatus();
+    
+          // Call handleAuthClick function when user clicks on
+          //      "Sign In/Authorize" button.
+          $('#sign-in-or-out-button').click(function() {
+            handleAuthClick();
+          }); 
+          $('#revoke-access-button').click(function() {
+            revokeAccess();
+          }); 
+        });
+      }
+    
+      function handleAuthClick() {
+        if (GoogleAuth.isSignedIn.get()) {
+          // User is authorized and has clicked 'Sign out' button.
+          GoogleAuth.signOut();
+        } else {
+          // User is not signed in. Start Google auth flow.
+          GoogleAuth.signIn();
+        }
+      }
+    
+      function revokeAccess() {
+        GoogleAuth.disconnect();
+      }
+    
+      function setSigninStatus(isSignedIn) {
+        var user = GoogleAuth.currentUser.get();
+        var isAuthorized = user.hasGrantedScopes(SCOPE);
+        if (isAuthorized) {
+          $('#sign-in-or-out-button').html('Sign out');
+          $('#revoke-access-button').css('display', 'inline-block');
+          $('#auth-status').html('You are currently signed in and have granted ' +
+              'access to this app.');
+        } else {
+          $('#sign-in-or-out-button').html('Sign In/Authorize');
+          $('#revoke-access-button').css('display', 'none');
+          $('#auth-status').html('You have not authorized this app or you are ' +
+              'signed out.');
+        }
+      }
+    
+      function updateSigninStatus(isSignedIn) {
+        setSigninStatus();
+      }
+    </script>
+
+
   </head>
   <body>
     <div class="ry-container">
@@ -33,35 +109,20 @@
         </div>
       </div>
     </div>
+<!-- The Google OAuth starts here -->
+<button id="sign-in-or-out-button"
+        style="margin-left: 25px">Sign In/Authorize</button>
+<button id="revoke-access-button"
+        style="display: none; margin-left: 25px">Revoke access</button>
 
-    
+<div id="auth-status" style="display: inline; padding-left: 25px"></div><hr>
 
-    <a id="linkedin-button" class="btn btn-block btn-social btn-linkedin">
-      <i class="fa fa-linkedin"></i> Sign in with Linkedin
-    </a>
-
-    <script>
-      $('#linkedin-button').on('click', function() {
-        // Initialize with your OAuth.io app public key
-        OAuth.initialize('wp9GLyk59FRnrkI6Cbz0zIT4P94');
-        // Use popup for oauth
-        OAuth.popup('linkedin2').then(linkedin => {
-          console.log('linkedin:',linkedin);
-          // Prompts 'welcome' message with User's email on successful login
-          // #me() is a convenient method to retrieve user data without requiring you
-          // to know which OAuth provider url to call
-          linkedin.me().then(data => {
-            console.log('me data:', data);
-            alert('Linkedin says your email is:' + data.email + ".\nView browser 'Console Log' for more details");
-          })
-          // Retrieves user data from OAuth provider by using #get() and
-          // OAuth provider url
-          linkedin.get('/v2/me').then(data => {
-            console.log('self data:', data);
-          })
-        });
-      })
-    </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script async defer src="https://apis.google.com/js/api.js" 
+        onload="this.onload=function(){};handleClientLoad()" 
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+<!-- The Google OAuth ends here  -->
 
   </body>
   <footer>

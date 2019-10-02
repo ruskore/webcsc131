@@ -80,6 +80,11 @@ ul {
    cursor: pointer;
  }
 
+ #auth-status {
+  display: inline;
+  margin-bottom: 20px;
+ }
+
  @media (max-width: 786px) {
   .ry-grid {
     display: block;

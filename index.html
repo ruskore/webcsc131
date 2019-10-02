@@ -90,9 +90,11 @@
               var isAuthorized = user.hasGrantedScopes(SCOPE);
               if (isAuthorized) {
                 $('#sign-in-or-out-button').html('Sign out');
-                $('#revoke-access-button').css('display', 'inline-block');
+                $('#sign-in-or-out-button').css('display', 'none');
+                $('#revoke-access-button').css('display', 'none');
                 $('#auth-status').html('$15,000.00 \n You are currently signed in and have granted ' +
                     'access to this app.');
+                $('#auth-status').css('font-size', '18px');
               } else {
                 $('#sign-in-or-out-button').html('Sign In');
                 $('#revoke-access-button').css('display', 'none');
@@ -112,7 +114,7 @@
           <button id="revoke-access-button"
                   style="display: none; margin-left: 25px">Revoke access</button>
           
-          <div id="auth-status" style="display: inline; padding-left: 25px"></div><hr>
+          <div id="auth-status"></div>
           
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
           <script async defer src="https://apis.google.com/js/api.js" 

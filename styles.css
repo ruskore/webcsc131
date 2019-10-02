@@ -69,7 +69,8 @@ ul {
   list-style-type: none;
  }
 
- #sign-in-or-out-button {
+ #sign-in-or-out-button,
+ #revoke-access-button {
    padding: 10px;
    font-size: 16px;
    border: 1px solid green;
